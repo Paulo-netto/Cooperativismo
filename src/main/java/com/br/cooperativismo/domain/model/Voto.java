@@ -2,7 +2,6 @@ package com.br.cooperativismo.domain.model;
 
 import java.io.Serializable;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,37 +10,37 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+
 @Entity
-@Table(name = "votos")
-public class Voto implements Serializable{
+@Table(name = "voto")
+public class Voto implements Serializable {
 
 	private static final long serialVersionUID = -9040499939260737359L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "voto_id")
 	private Long id;
 
 	@OneToOne()
-	@JoinColumn(name = "pauta_id")
-	private Pauta pauta;
+	@JoinColumn(name = "tipo_votacao_pauta_id")
+	private TipoVotacaoPauta tipoVotacaoPauta;
 
-	@Column(name = "voto_descricao")
+//	@Column(name = "descricao")
 	private String descricao;
 
-	@Column(name = "votoSimNao")
-	private Boolean voto;
+//	@Column(name = "votoSimNao")
+	private Boolean simOuNao;
 
 	public Voto() {
 		super();
 	}
 
-	public Voto(Long id, Pauta pauta, String descricao, Boolean voto) {
+	public Voto(Long id, TipoVotacaoPauta tipoVotacaoPauta, String descricao, Boolean simOuNao) {
 		super();
 		this.id = id;
-		this.pauta = pauta;
+		this.tipoVotacaoPauta = tipoVotacaoPauta;
 		this.descricao = descricao;
-		this.voto = voto;
+		this.simOuNao = simOuNao;
 	}
 
 	public Long getId() {
@@ -52,12 +51,12 @@ public class Voto implements Serializable{
 		this.id = id;
 	}
 
-	public Pauta getPauta() {
-		return pauta;
+	public TipoVotacaoPauta getTipoVotacaoPauta() {
+		return tipoVotacaoPauta;
 	}
 
-	public void setPauta(Pauta pauta) {
-		this.pauta = pauta;
+	public void setTipoVotacaoPauta(TipoVotacaoPauta tipoVotacaoPauta) {
+		this.tipoVotacaoPauta = tipoVotacaoPauta;
 	}
 
 	public String getDescricao() {
@@ -68,14 +67,12 @@ public class Voto implements Serializable{
 		this.descricao = descricao;
 	}
 
-	public Boolean getVoto() {
-		return voto;
+	public Boolean getSimOuNao() {
+		return simOuNao;
 	}
 
-	public void setVoto(Boolean voto) {
-		this.voto = voto;
+	public void setSimOuNao(Boolean simOuNao) {
+		this.simOuNao = simOuNao;
 	}
-	
-	
 
 }

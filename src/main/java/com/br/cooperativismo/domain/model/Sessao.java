@@ -20,12 +20,11 @@ public class Sessao implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "sessao_id")
 	private Long id;
 
 	@OneToOne()
-	@JoinColumn(name = "pauta_id")
-	private Pauta pauta;
+	@JoinColumn(name = "tipo_votacao_pauta_id")
+	private TipoVotacaoPauta tipoVotacaoPauta;
 
 	@Column(name = "tempo_inicial_sessao")
 	private LocalDateTime tempoInicial;
@@ -37,10 +36,10 @@ public class Sessao implements Serializable {
 		super();
 	}
 
-	public Sessao(Long id, Pauta pauta, LocalDateTime tempoInicial, LocalDateTime tempoFinal) {
+	public Sessao(Long id, TipoVotacaoPauta tipoVotacaoPauta, LocalDateTime tempoInicial, LocalDateTime tempoFinal) {
 		super();
 		this.id = id;
-		this.pauta = pauta;
+		this.tipoVotacaoPauta = tipoVotacaoPauta;
 		this.tempoInicial = tempoInicial;
 		this.tempoFinal = tempoFinal;
 	}
@@ -53,12 +52,12 @@ public class Sessao implements Serializable {
 		this.id = id;
 	}
 
-	public Pauta getPauta() {
-		return pauta;
+	public TipoVotacaoPauta getTipoVotacaoPauta() {
+		return tipoVotacaoPauta;
 	}
 
-	public void setPauta(Pauta pauta) {
-		this.pauta = pauta;
+	public void setTipoVotacaoPauta(TipoVotacaoPauta tipoVotacaoPauta) {
+		this.tipoVotacaoPauta = tipoVotacaoPauta;
 	}
 
 	public LocalDateTime getTempoInicial() {
@@ -76,50 +75,5 @@ public class Sessao implements Serializable {
 	public void setTempoFinal(LocalDateTime tempoFinal) {
 		this.tempoFinal = tempoFinal;
 	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((pauta == null) ? 0 : pauta.hashCode());
-		result = prime * result + ((tempoFinal == null) ? 0 : tempoFinal.hashCode());
-		result = prime * result + ((tempoInicial == null) ? 0 : tempoInicial.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Sessao other = (Sessao) obj;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		if (pauta == null) {
-			if (other.pauta != null)
-				return false;
-		} else if (!pauta.equals(other.pauta))
-			return false;
-		if (tempoFinal == null) {
-			if (other.tempoFinal != null)
-				return false;
-		} else if (!tempoFinal.equals(other.tempoFinal))
-			return false;
-		if (tempoInicial == null) {
-			if (other.tempoInicial != null)
-				return false;
-		} else if (!tempoInicial.equals(other.tempoInicial))
-			return false;
-		return true;
-	}
-	
-	
 
 }

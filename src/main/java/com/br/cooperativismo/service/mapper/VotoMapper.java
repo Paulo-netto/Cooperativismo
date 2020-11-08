@@ -1,8 +1,13 @@
 package com.br.cooperativismo.service.mapper;
 
-import org.mapstruct.Mapper;
+import org.springframework.stereotype.Component;
 
-@Mapper(componentModel = "spring")
+import com.br.cooperativismo.domain.model.Voto;
+
+/**
+ * Classe responsável pelo mapeamento de um {@link Voto}.
+ */
+@Component
 public class VotoMapper {
 
 }
