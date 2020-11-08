@@ -12,14 +12,14 @@ import com.br.cooperativismo.domain.model.TipoVotacaoPauta;
 @Component
 public class TipoVotacaoPautaMapper {
 	
-	public TipoVotacaoPautaDTO mapper(TipoVotacaoPauta pauta) {
+	public static TipoVotacaoPautaDTO mapper(TipoVotacaoPauta pauta) {
 		TipoVotacaoPautaDTO dto = new TipoVotacaoPautaDTO();
 		dto.setDescricao(pauta.getDescricao());
 		dto.setTipoVotacaoPautaId(pauta.getId());
 		return dto;
 	}
 	
-	public TipoVotacaoPauta mapper(TipoVotacaoPautaDTO dto) {
+	public static TipoVotacaoPauta mapper(TipoVotacaoPautaDTO dto) {
 		TipoVotacaoPauta pauta = new TipoVotacaoPauta();
 		pauta.setDescricao(dto.getDescricao());
 		return pauta;

@@ -14,12 +14,17 @@ import com.br.cooperativismo.domain.model.TipoVotacaoPauta;
 @Component
 public class SessaoMapper {
 
-	public Sessao mapper(SessaoDTO dto, TipoVotacaoPauta pauta, LocalDateTime tempo) {
+	public static Sessao mapper(SessaoDTO dto, TipoVotacaoPauta pauta, LocalDateTime tempo) {
 		Sessao sessao = new Sessao();
 		sessao.setTipoVotacaoPauta(pauta);
 		sessao.setTempoInicial(tempo);
 		sessao.setTempoFinal(dto.getVotoFinal());
 		return sessao;
+	}
+
+	public static SessaoDTO mapper(Sessao salvar) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
