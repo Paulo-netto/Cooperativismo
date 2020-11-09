@@ -8,7 +8,9 @@ import com.br.cooperativismo.domain.model.Voto;
 
 @Repository
 public interface VotoRepository extends JpaRepository<Voto, Long> {
-	
 
+	Long countByTipoVotacaoPautaAndSimOuNaoTrue(TipoVotacaoPauta tipoVotacaoPauta);
+
+	Long countByTipoVotacaoPautaAndSimOuNaoFalse(TipoVotacaoPauta tipoVotacaoPauta);
 
 }

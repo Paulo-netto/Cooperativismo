@@ -30,13 +30,16 @@ public class SessaoService {
 	}
 
 	public SessaoDTO abrirSessao(SessaoDTO dto) {
-		Optional<TipoVotacaoPauta> tipoVotacaoPauta = tipoVotacaoPautaService.findById(dto.getTipoVotacaoPautaId());
-		if (tipoVotacaoPauta.isPresent()) {
-			Sessao entidade = SessaoMapper.mapper(dto, tipoVotacaoPauta.get(), LocalDateTime.now());
-			Sessao salvar = sessaoRepositoy.save(entidade);
-			return SessaoMapper.mapper(salvar);
+
+		Optional<TipoVotacaoPauta> tipoVotacaoPautaID = tipoVotacaoPautaService.findById(dto.getTipoVotacaoPautaId());
+
+		if (!tipoVotacaoPautaID.isPresent()) {
+			throw new NegocioExeption(ConstantsUtil.ERRO_ABRIR_SESSAO_PAUTA);
 		}
-		throw new NegocioExeption(ConstantsUtil.ERRO_ABRIR_SESSAO_PAUTA);
+		Sessao entidade = SessaoMapper.mapper(dto, tipoVotacaoPautaID.get(), LocalDateTime.now());
+		Sessao salvar = sessaoRepositoy.save(entidade);
+		return SessaoMapper.mapper(salvar);
+
 	}
 
 	public Boolean isSessionAbertar(TipoVotacaoPauta tipoVotacaoPauta) {
@@ -47,8 +50,4 @@ public class SessaoService {
 		throw new NegocioExeption(ConstantsUtil.ERRO_SESSAO);
 	}
 
-//	private String salvarDescricaoDaPauta(Sessao sessao) {
-//		Sessao entidade = sessaoRepositoy.save(sessao);
-//		return entidade.getTipoVotacaoPauta().getDescricao();
-//	}
 }

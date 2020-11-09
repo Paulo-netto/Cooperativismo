@@ -1,6 +1,7 @@
 package com.br.cooperativismo.service.mapper;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 import org.springframework.stereotype.Component;
 
@@ -18,13 +19,27 @@ public class SessaoMapper {
 		Sessao sessao = new Sessao();
 		sessao.setTipoVotacaoPauta(pauta);
 		sessao.setTempoInicial(tempo);
-		sessao.setTempoFinal(dto.getVotoFinal());
+		sessao.setTempoFinal(getFinalVoto(sessao.getTempoInicial(), tempo));
 		return sessao;
 	}
 
-	public static SessaoDTO mapper(Sessao salvar) {
-		// TODO Auto-generated method stub
-		return null;
+	public static SessaoDTO mapper(Sessao sessao) {
+		return new SessaoDTO(Objects.nonNull(sessao));
+	}
+
+	/**
+	 * Metodo responsavel para saber qual foi tempo final da sessao ou deixar como
+	 * 1min default;
+	 * 
+	 * @param tempoInicial
+	 * @param tempoFinal
+	 * @return
+	 */
+	private static LocalDateTime getFinalVoto(LocalDateTime tempoInicial, LocalDateTime tempoFinal) {
+		if (Objects.isNull(tempoFinal)) {
+			return tempoInicial.plusMinutes(1);
+		}
+		return tempoFinal;
 	}
 
 }

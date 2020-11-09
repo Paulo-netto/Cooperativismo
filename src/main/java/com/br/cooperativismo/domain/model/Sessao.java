@@ -76,4 +76,41 @@ public class Sessao implements Serializable {
 		this.tempoFinal = tempoFinal;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((tempoFinal == null) ? 0 : tempoFinal.hashCode());
+		result = prime * result + ((tempoInicial == null) ? 0 : tempoInicial.hashCode());
+		result = prime * result + ((tipoVotacaoPauta == null) ? 0 : tipoVotacaoPauta.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Sessao other = (Sessao) obj;
+		if (tempoFinal == null) {
+			if (other.tempoFinal != null)
+				return false;
+		} else if (!tempoFinal.equals(other.tempoFinal))
+			return false;
+		if (tempoInicial == null) {
+			if (other.tempoInicial != null)
+				return false;
+		} else if (!tempoInicial.equals(other.tempoInicial))
+			return false;
+		if (tipoVotacaoPauta == null) {
+			if (other.tipoVotacaoPauta != null)
+				return false;
+		} else if (!tipoVotacaoPauta.equals(other.tipoVotacaoPauta))
+			return false;
+		return true;
+	}
+
 }

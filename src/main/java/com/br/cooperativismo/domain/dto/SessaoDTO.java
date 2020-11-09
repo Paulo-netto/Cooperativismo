@@ -3,18 +3,21 @@ package com.br.cooperativismo.domain.dto;
 import java.time.LocalDateTime;
 
 public class SessaoDTO {
-	
+
 	private Long TipoVotacaoPautaId;
 	private LocalDateTime votoFinal;
 	private boolean sessaoAberta;
-	
+
 	public SessaoDTO() {
 	}
 
 	public SessaoDTO(Long tipoVotacaoPautaId, LocalDateTime votoFinal, boolean sessaoAberta) {
-		super();
 		TipoVotacaoPautaId = tipoVotacaoPautaId;
 		this.votoFinal = votoFinal;
+		this.sessaoAberta = sessaoAberta;
+	}
+
+	public SessaoDTO(boolean sessaoAberta) {
 		this.sessaoAberta = sessaoAberta;
 	}
 
@@ -41,9 +44,5 @@ public class SessaoDTO {
 	public void setSessaoAberta(boolean sessaoAberta) {
 		this.sessaoAberta = sessaoAberta;
 	}
-	
-	
-	
 
-	
 }

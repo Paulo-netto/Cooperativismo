@@ -38,7 +38,6 @@ public class VotoService {
 		throw new NegocioExeption(ConstantsUtil.NAO_POSSIVEL_VOTAR_NESTA_SESSAO);
 	}
 
-
 	/**
 	 * Metodo responsavel por salvar um voto na pauta
 	 * 
@@ -52,20 +51,16 @@ public class VotoService {
 		return VotoMapper.mapper(salvar);
 	}
 	
-	
+
 	public VotoDTO resultadoVotacao(VotoDTO dto) {
 		Optional<TipoVotacaoPauta> optional = tipoVotacaoPautaService.findById(dto.getTipoVotacaoPautaId());
-		if (optional.isPresent()) {
-			if (sessaoService.isSessionAbertar(optional.get())) {
-//				Long votosSim = votoRepository.countByTopicVotingAndVoteTrue(optional.get());
-//				Long votosNao = votoRepository.countByTopicVotingAndVoteFalse(optional.get());
-//				return VotoMapper.mapper(optional.get(), votosSim, votosNao);
-			}
-			throw new NegocioExeption(ConstantsUtil.SESSAO_FECHADA_ERRO);
+		if (optional.isPresent() && sessaoService.isSessionAbertar(optional.get())) {
+			Long votosSim = votoRepository.countByTipoVotacaoPautaAndSimOuNaoTrue(optional.get());
+			Long votosNao = votoRepository.countByTipoVotacaoPautaAndSimOuNaoFalse(optional.get());
+			return VotoMapper.mapper(optional.get(), votosSim, votosNao);
 		}
-		throw new NegocioExeption(ConstantsUtil.PAUTA_NAO_EXISTE);
-	}
+		throw new NegocioExeption(ConstantsUtil.SESSAO_FECHADA_ERRO);
 
-	
+	}
 
 }

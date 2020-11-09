@@ -24,6 +24,10 @@ public class VotoDTO {
 		this.TipoVotacaoPautaDescricao = tipoVotacaoPautaDescricao;
 	}
 
+	public VotoDTO(Boolean votoSucesso) {
+		this.votoSucesso = votoSucesso;
+	}
+
 	public Long getVotosSim() {
 		return votosSim;
 	}
