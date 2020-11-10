@@ -28,6 +28,8 @@ public class VotoDTO {
 		this.votoSucesso = votoSucesso;
 	}
 
+	
+
 	public Long getVotosSim() {
 		return votosSim;
 	}

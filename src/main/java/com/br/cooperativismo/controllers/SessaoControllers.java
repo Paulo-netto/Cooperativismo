@@ -19,7 +19,7 @@ import com.br.cooperativismo.service.SessaoService;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
-@RequestMapping("sessao")
+@RequestMapping("sessoes")
 public class SessaoControllers {
 
 	private Logger log = LoggerFactory.getLogger(SessaoControllers.class);

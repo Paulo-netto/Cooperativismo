@@ -22,10 +22,9 @@ public class TipoVotacaoPautaService {
 		this.tipoVotacaoPautaRepository = tipoVotacaoPautaRepository;
 	}
 
-	public TipoVotacaoPautaDTO salvarTipoVotacaoPauta(TipoVotacaoPautaDTO dto) {
-		TipoVotacaoPauta mapper = TipoVotacaoPautaMapper.mapper(dto);
-		TipoVotacaoPauta salvar = tipoVotacaoPautaRepository.save(mapper);
-		return TipoVotacaoPautaMapper.mapper(salvar);
+	public void salvarTipoVotacaoPauta(TipoVotacaoPautaDTO dto) {
+		tipoVotacaoPautaRepository.save(TipoVotacaoPautaMapper.mapper(dto));
+
 	}
 
 	public Optional<TipoVotacaoPauta> findById(Long id) {

@@ -50,17 +50,23 @@ public class VotoService {
 		Voto salvar = votoRepository.save(entidade);
 		return VotoMapper.mapper(salvar);
 	}
-	
 
-	public VotoDTO resultadoVotacao(VotoDTO dto) {
+	private VotoDTO resultadoVotacao(VotoDTO dto) {
 		Optional<TipoVotacaoPauta> optional = tipoVotacaoPautaService.findById(dto.getTipoVotacaoPautaId());
 		if (optional.isPresent() && sessaoService.isSessionAbertar(optional.get())) {
-			Long votosSim = votoRepository.countByTipoVotacaoPautaAndSimOuNaoTrue(optional.get());
-			Long votosNao = votoRepository.countByTipoVotacaoPautaAndSimOuNaoFalse(optional.get());
-			return VotoMapper.mapper(optional.get(), votosSim, votosNao);
+			return VotoMapper.mapper(optional.get(),
+					votoRepository.countByTipoVotacaoPautaAndSimOuNaoTrue(optional.get()),
+					votoRepository.countByTipoVotacaoPautaAndSimOuNaoFalse(optional.get()));
 		}
 		throw new NegocioExeption(ConstantsUtil.SESSAO_FECHADA_ERRO);
 
 	}
+
+//	public VotoDTO resultado(Long tipoVotacaoPautaId) {
+//		VotoDTO mapper = VotoMapper.mapper(tipoVotacaoPautaId);
+//		VotoDTO service = resultadoVotacao(mapper);
+//		VotoDTO resultado = VotoMapper.mapper(service, service.getTipoVotacaoPautaDescricao());
+//		return resultado;
+//	}
 
 }

@@ -21,7 +21,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
 @RestController
-@RequestMapping("voto")
+@RequestMapping("votos")
 public class VotoControllers {
 
 	private Logger log = LoggerFactory.getLogger(VotoControllers.class);

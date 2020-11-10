@@ -5,7 +5,6 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +18,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
 @RestController
-@RequestMapping("tipos-votacao")
+@RequestMapping("tipo-votacoes")
 public class TipoVotacaoPautaControllers {
 
 	private Logger log = LoggerFactory.getLogger(TipoVotacaoPautaControllers.class);
@@ -29,10 +28,10 @@ public class TipoVotacaoPautaControllers {
 
 	@PostMapping
 	@ApiOperation(value = "Criar um novo tipo de votacao na pauta", response = TipoVotacaoPauta.class)
-	public ResponseEntity<?> insertTopicVoting(@RequestBody @Valid TipoVotacaoPautaDTO dto) {
+	public ResponseEntity<Void> insertTopicVoting(@RequestBody @Valid TipoVotacaoPautaDTO dto) {
 		log.debug("Requisição REST para criar um tipo de votacao o : {}", dto);
-		TipoVotacaoPautaDTO tipo = tipoVotacaoPautaService.salvarTipoVotacaoPauta(dto);
-		return new ResponseEntity<>(tipo, HttpStatus.OK);
+		tipoVotacaoPautaService.salvarTipoVotacaoPauta(dto);
+		return ResponseEntity.ok().build();
 	}
 
 }

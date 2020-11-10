@@ -30,4 +30,10 @@ public class VotoMapper {
 		return dto;
 	}
 
+	public static VotoDTO mapper(Long tipoVotacaoPautaId) {
+		VotoDTO dto = new VotoDTO();
+		dto.setTipoVotacaoPautaId(tipoVotacaoPautaId);
+		return dto;
+	}
+
 }
