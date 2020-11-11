@@ -1,4 +1,4 @@
-package com.br.cooperativismo.domain.dto;
+package com.br.cooperativismo.domain.dto.sessao;
 
 import java.time.LocalDateTime;
 

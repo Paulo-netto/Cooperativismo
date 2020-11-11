@@ -6,10 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.br.cooperativismo.domain.dto.VotoDTO;
+import com.br.cooperativismo.domain.dto.voto.VotoDTO;
+import com.br.cooperativismo.domain.model.TipoVotacaoPauta;
 import com.br.cooperativismo.domain.model.Voto;
 import com.br.cooperativismo.exception.NegocioExeption;
-import com.br.cooperativismo.domain.model.TipoVotacaoPauta;
 import com.br.cooperativismo.repository.VotoRepository;
 import com.br.cooperativismo.service.mapper.VotoMapper;
 import com.br.cooperativismo.util.ConstantsUtil;
@@ -51,7 +51,7 @@ public class VotoService {
 		return VotoMapper.mapper(salvar);
 	}
 
-	private VotoDTO resultadoVotacao(VotoDTO dto) {
+	public VotoDTO votacao(VotoDTO dto) {
 		Optional<TipoVotacaoPauta> optional = tipoVotacaoPautaService.findById(dto.getTipoVotacaoPautaId());
 		if (optional.isPresent() && sessaoService.isSessionAbertar(optional.get())) {
 			return VotoMapper.mapper(optional.get(),
@@ -62,11 +62,6 @@ public class VotoService {
 
 	}
 
-//	public VotoDTO resultado(Long tipoVotacaoPautaId) {
-//		VotoDTO mapper = VotoMapper.mapper(tipoVotacaoPautaId);
-//		VotoDTO service = resultadoVotacao(mapper);
-//		VotoDTO resultado = VotoMapper.mapper(service, service.getTipoVotacaoPautaDescricao());
-//		return resultado;
-//	}
+
 
 }

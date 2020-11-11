@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.br.cooperativismo.domain.dto.TipoVotacaoPautaDTO;
+import com.br.cooperativismo.domain.dto.tipovotacao.TipoVotacaoPedidoDTO;
 import com.br.cooperativismo.domain.model.TipoVotacaoPauta;
-import com.br.cooperativismo.service.TipoVotacaoPautaService;
+import com.br.cooperativismo.service.adapter.TipoVotacaoPautaAdapter;
 
 import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
@@ -24,13 +24,13 @@ public class TipoVotacaoPautaControllers {
 	private Logger log = LoggerFactory.getLogger(TipoVotacaoPautaControllers.class);
 
 	@Autowired
-	private TipoVotacaoPautaService tipoVotacaoPautaService;
+	private TipoVotacaoPautaAdapter TipoVotacaoPautaAdapter;
 
 	@PostMapping
 	@ApiOperation(value = "Criar um novo tipo de votacao na pauta", response = TipoVotacaoPauta.class)
-	public ResponseEntity<Void> insertTopicVoting(@RequestBody @Valid TipoVotacaoPautaDTO dto) {
-		log.debug("Requisição REST para criar um tipo de votacao o : {}", dto);
-		tipoVotacaoPautaService.salvarTipoVotacaoPauta(dto);
+	public ResponseEntity<?> criarTipoVotacaoPauta(@RequestBody @Valid TipoVotacaoPedidoDTO pedido) {
+		log.debug("Requisição REST para criar um tipo de votacao o : {}", pedido);
+		TipoVotacaoPautaAdapter.salvar(pedido);
 		return ResponseEntity.ok().build();
 	}
 

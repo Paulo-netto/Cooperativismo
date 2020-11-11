@@ -10,5 +10,13 @@ public final class ConstantsUtil {
 	public static final String NAO_POSSIVEL_VOTAR_NESTA_SESSAO = "Não é possivel votar nesta sessao";
 	public static final String PAUTA_NAO_EXISTE = "A pauta para a votação não existe ou não foi encontrada";
 	public static final String SESSAO_FECHADA_ERRO = "Não foi possivel fechar a sessao";
+	public static final String CONTAGEM_IGUAL = "Votos sim e não tem a mesma quantidade";
+	public static final String VOTOS_SIM_MAIORES = "Votos sim estar na frente";
+	public static final String VOTOS_NAO_MAIORES = "Votos não estar na frente";
+	public static final String VOTO_CERTO = "Seu voto está certo";
+	public static final String VOTO_ERRADO = "Seu voto não esta ok";
+	public static final String NAO_ENCONTROU_DOCUMENTO = "Nao encontrou o cpf";
+	public static final String SESSAO_ABERTA = "Sessao aberta para votar";
+	public static final String SEM_DESCRICAO = "A descriçao é necessaria";
 
 }

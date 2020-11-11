@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.br.cooperativismo.domain.dto.SessaoDTO;
+import com.br.cooperativismo.domain.dto.sessao.SessaoDTO;
 import com.br.cooperativismo.domain.model.Sessao;
 import com.br.cooperativismo.domain.model.TipoVotacaoPauta;
 import com.br.cooperativismo.exception.NegocioExeption;
@@ -30,13 +30,11 @@ public class SessaoService {
 	}
 
 	public SessaoDTO abrirSessao(SessaoDTO dto) {
-
 		Optional<TipoVotacaoPauta> tipoVotacaoPautaID = tipoVotacaoPautaService.findById(dto.getTipoVotacaoPautaId());
-
-		if (!tipoVotacaoPautaID.isPresent()) {
+		if (!tipoVotacaoPautaID.isPresent() || tipoVotacaoPautaID == null) {
 			throw new NegocioExeption(ConstantsUtil.ERRO_ABRIR_SESSAO_PAUTA);
 		}
-		Sessao entidade = SessaoMapper.mapper(dto, tipoVotacaoPautaID.get(), LocalDateTime.now());
+		Sessao entidade = SessaoMapper.mapper(dto, tipoVotacaoPautaID.get(), dto.getVotoFinal());
 		Sessao salvar = sessaoRepositoy.save(entidade);
 		return SessaoMapper.mapper(salvar);
 

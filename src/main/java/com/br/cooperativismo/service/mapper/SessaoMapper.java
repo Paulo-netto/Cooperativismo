@@ -5,9 +5,12 @@ import java.util.Objects;
 
 import org.springframework.stereotype.Component;
 
-import com.br.cooperativismo.domain.dto.SessaoDTO;
+import com.br.cooperativismo.domain.dto.sessao.SessaoDTO;
+import com.br.cooperativismo.domain.dto.sessao.SessaoPedidoDTO;
+import com.br.cooperativismo.domain.dto.sessao.SessaoRespostaDTO;
 import com.br.cooperativismo.domain.model.Sessao;
 import com.br.cooperativismo.domain.model.TipoVotacaoPauta;
+import com.br.cooperativismo.util.ConstantsUtil;
 
 /**
  * Classe responsável pelo mapeamento de um {@link Sessao}.
@@ -18,7 +21,7 @@ public class SessaoMapper {
 	public static Sessao mapper(SessaoDTO dto, TipoVotacaoPauta pauta, LocalDateTime tempo) {
 		Sessao sessao = new Sessao();
 		sessao.setTipoVotacaoPauta(pauta);
-		sessao.setTempoInicial(tempo);
+		sessao.setTempoInicial(LocalDateTime.now());
 		sessao.setTempoFinal(getFinalVoto(sessao.getTempoInicial(), tempo));
 		return sessao;
 	}
@@ -40,6 +43,20 @@ public class SessaoMapper {
 			return tempoInicial.plusMinutes(1);
 		}
 		return tempoFinal;
+	}
+
+	public static SessaoDTO mapper(Long tipoVotacaoId, SessaoPedidoDTO pedido) {
+		SessaoDTO dto = new SessaoDTO();
+		dto.setTipoVotacaoPautaId(tipoVotacaoId);
+		dto.setVotoFinal(pedido.getTempoFinal());
+		return dto;
+	}
+
+	public static SessaoRespostaDTO mapper(SessaoDTO abrirSesao) {
+		if (!abrirSesao.isSessaoAberta()) {
+			return new SessaoRespostaDTO(ConstantsUtil.SESSAO_ABERTA);
+		}
+		return new SessaoRespostaDTO(ConstantsUtil.SESSAO_FECHADA);
 	}
 
 }

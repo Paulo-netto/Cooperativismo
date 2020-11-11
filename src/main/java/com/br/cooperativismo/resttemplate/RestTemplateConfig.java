@@ -1,4 +1,4 @@
-package com.br.cooperativismo.config;
+package com.br.cooperativismo.resttemplate;
 
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;

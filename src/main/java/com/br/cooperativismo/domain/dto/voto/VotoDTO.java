@@ -1,4 +1,4 @@
-package com.br.cooperativismo.domain.dto;
+package com.br.cooperativismo.domain.dto.voto;
 
 public class VotoDTO {
 

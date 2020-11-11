@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.br.cooperativismo.domain.dto.TipoVotacaoPautaDTO;
+import com.br.cooperativismo.domain.dto.tipovotacao.TipoVotacaoPautaDTO;
 import com.br.cooperativismo.domain.model.TipoVotacaoPauta;
 import com.br.cooperativismo.repository.TipoVotacaoPautaRepository;
 import com.br.cooperativismo.service.mapper.TipoVotacaoPautaMapper;
@@ -22,8 +22,10 @@ public class TipoVotacaoPautaService {
 		this.tipoVotacaoPautaRepository = tipoVotacaoPautaRepository;
 	}
 
-	public void salvarTipoVotacaoPauta(TipoVotacaoPautaDTO dto) {
-		tipoVotacaoPautaRepository.save(TipoVotacaoPautaMapper.mapper(dto));
+	public TipoVotacaoPautaDTO salvarTipoVotacaoPauta(TipoVotacaoPautaDTO dto) {
+		TipoVotacaoPauta tipo = TipoVotacaoPautaMapper.mapper(dto);
+		TipoVotacaoPauta salvar = tipoVotacaoPautaRepository.save(tipo);
+		return TipoVotacaoPautaMapper.mapper(salvar);
 
 	}
 
