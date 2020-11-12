@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.br.cooperativismo.domain.dto.sessao.SessaoPedidoDTO;
 import com.br.cooperativismo.domain.model.Sessao;
-import com.br.cooperativismo.exception.NegocioExeption;
+import com.br.cooperativismo.exception.NotFoundException;
 import com.br.cooperativismo.service.adapter.SessaoAdapter;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -47,12 +47,11 @@ public class SessaoControllers {
 		return ResponseEntity.ok().build();
 	}
 
-	@ExceptionHandler(NegocioExeption.class)
-	public ResponseEntity<JsonNode> handleExceptionServeErro(NegocioExeption e) {
+	@ExceptionHandler(NotFoundException.class)
+	public ResponseEntity<JsonNode> handleExceptionServeErro(NotFoundException e) {
 		HttpStatus badRequest = HttpStatus.INTERNAL_SERVER_ERROR;
 		ObjectNode jsonNode = new ObjectMapper().createObjectNode();
-		jsonNode.put("status", badRequest.value());
-		jsonNode.put("message", e.getMessage());
+		jsonNode.put("Mensagem", e.getMessage());
 		return ResponseEntity.status(badRequest).body(jsonNode);
 	}
 

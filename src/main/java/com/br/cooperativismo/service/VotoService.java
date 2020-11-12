@@ -9,7 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.br.cooperativismo.domain.dto.voto.VotoDTO;
 import com.br.cooperativismo.domain.model.TipoVotacaoPauta;
 import com.br.cooperativismo.domain.model.Voto;
-import com.br.cooperativismo.exception.NegocioExeption;
+import com.br.cooperativismo.exception.NegocioException;
+import com.br.cooperativismo.exception.NotFoundException;
 import com.br.cooperativismo.repository.VotoRepository;
 import com.br.cooperativismo.resttemplate.StatusInforVoto;
 import com.br.cooperativismo.resttemplate.UserInfoApiRestCliente;
@@ -37,36 +38,40 @@ public class VotoService {
 		Optional<TipoVotacaoPauta> optional = tipoVotacaoPautaService.findById(dto.getTipoVotacaoPautaId());
 		StatusInforVoto status = restCliente.consultarPermissaoParaVotar(dto.getCpf());
 		if (status.isApto()) {
-			validarSessaoDeVotacao(optional);
-			Voto novoVoto = VotoMapper.mapper(optional.get(), dto);
-			Voto votoSalvo = votoRepository.save(novoVoto);
-			return VotoMapper.mapper(votoSalvo);
+			if (optional.isPresent()) {
+				if (sessaoService.isSessionAbertar(optional.get())) {
+					return votar(dto, optional);
+				}
+				throw new NotFoundException(ConstantsUtil.SESSAO_FECHADA);
+			}
+			throw new NotFoundException(ConstantsUtil.NAO_POSSIVEL_VOTAR_NESTA_SESSAO);
 		}
-		throw new NegocioExeption(ConstantsUtil.NAO_APTO);
+		throw new NegocioException(ConstantsUtil.NAO_APTO);
 
+	}
+
+	/**
+	 * Metodo responsavel por salvar um voto na pauta
+	 * 
+	 * @param dto
+	 * @param tipoVotacaoPauta
+	 * @return
+	 */
+	private VotoDTO votar(VotoDTO dto, Optional<TipoVotacaoPauta> tipoVotacaoPauta) {
+		Voto entidade = VotoMapper.mapper(tipoVotacaoPauta.get(), dto);
+		Voto salvar = votoRepository.save(entidade);
+		return VotoMapper.mapper(salvar);
 	}
 
 	public VotoDTO resultadoVotacao(VotoDTO dto) {
 
 		Optional<TipoVotacaoPauta> optional = tipoVotacaoPautaService.findById(dto.getTipoVotacaoPautaId());
-		validarSessaoDeVotacao(optional);
-		return VotoMapper.mapper(optional.get(), votoRepository.countByTipoVotacaoPautaAndSimOuNaoTrue(optional.get()),
-				votoRepository.countByTipoVotacaoPautaAndSimOuNaoFalse(optional.get()));
-	}
-
-	/**
-	 * Metodo responsavel por validar a votação
-	 * 
-	 * @param tipoVotacaoPauta
-	 */
-	private void validarSessaoDeVotacao(Optional<TipoVotacaoPauta> tipoVotacaoPauta) {
-		if (!tipoVotacaoPauta.isPresent()) {
-			throw new NegocioExeption(ConstantsUtil.PAUTA_NAO_EXISTE);
+		if (optional.isPresent() && sessaoService.isSessionAbertar(optional.get())) {
+			return VotoMapper.mapper(optional.get(),
+					votoRepository.countByTipoVotacaoPautaAndSimOuNaoTrue(optional.get()),
+					votoRepository.countByTipoVotacaoPautaAndSimOuNaoFalse(optional.get()));
 		}
-		if (!sessaoService.hasSessaoAberta(tipoVotacaoPauta.get())) {
-			throw new NegocioExeption(ConstantsUtil.SESSAO_FECHADA);
-		}
+		throw new NotFoundException(ConstantsUtil.SESSAO_FECHADA_ERRO);
 
 	}
-
 }

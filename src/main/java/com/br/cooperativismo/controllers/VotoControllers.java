@@ -17,7 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.br.cooperativismo.domain.dto.voto.VotoPedidoDTO;
 import com.br.cooperativismo.domain.model.Voto;
-import com.br.cooperativismo.exception.NegocioExeption;
+import com.br.cooperativismo.exception.NegocioException;
+import com.br.cooperativismo.exception.NotFoundException;
 import com.br.cooperativismo.service.adapter.VotoAdapter;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -52,11 +53,19 @@ public class VotoControllers {
 		return ResponseEntity.ok(VotoAdapter.resultadoVotacao(codigoPauta));
 	}
 
-	@ExceptionHandler(NegocioExeption.class)
-	public ResponseEntity<JsonNode> handleExceptionServeErro(NegocioExeption e) {
-		HttpStatus badRequest = HttpStatus.INTERNAL_SERVER_ERROR;
+	@ExceptionHandler(NegocioException.class)
+	public ResponseEntity<JsonNode> handleExceptionServeErro(NegocioException e) {
+		HttpStatus error = HttpStatus.INTERNAL_SERVER_ERROR;
 		ObjectNode jsonNode = new ObjectMapper().createObjectNode();
-		jsonNode.put("message", e.getMessage());
+		jsonNode.put("Mensagem", e.getMessage());
+		return ResponseEntity.status(error).body(jsonNode);
+	}
+	
+	@ExceptionHandler(NotFoundException.class)
+	public ResponseEntity<JsonNode> handleException(NotFoundException e) {
+		HttpStatus badRequest = HttpStatus.BAD_REQUEST;
+		ObjectNode jsonNode = new ObjectMapper().createObjectNode();
+		jsonNode.put("Mensagem", e.getMessage());
 		return ResponseEntity.status(badRequest).body(jsonNode);
 	}
 

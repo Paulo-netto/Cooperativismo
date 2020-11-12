@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.br.cooperativismo.domain.dto.tipovotacao.TipoVotacaoPautaDTO;
 import com.br.cooperativismo.domain.model.TipoVotacaoPauta;
-import com.br.cooperativismo.exception.NegocioExeption;
+import com.br.cooperativismo.exception.NotFoundException;
 import com.br.cooperativismo.repository.TipoVotacaoPautaRepository;
 import com.br.cooperativismo.service.mapper.TipoVotacaoPautaMapper;
 import com.br.cooperativismo.util.ConstantsUtil;
@@ -25,7 +25,7 @@ public class TipoVotacaoPautaService {
 			TipoVotacaoPauta salvar = tipoVotacaoPautaRepository.save(tipo);
 			return TipoVotacaoPautaMapper.mapper(salvar);
 		}
-		throw new NegocioExeption(ConstantsUtil.SEM_DESCRICAO);
+		throw new NotFoundException(ConstantsUtil.SEM_DESCRICAO);
 
 	}
 

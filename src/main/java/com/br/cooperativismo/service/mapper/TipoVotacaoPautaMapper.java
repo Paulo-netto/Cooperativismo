@@ -6,7 +6,7 @@ import com.br.cooperativismo.domain.dto.tipovotacao.TipoVotacaoPautaDTO;
 import com.br.cooperativismo.domain.dto.tipovotacao.TipoVotacaoPedidoDTO;
 import com.br.cooperativismo.domain.dto.tipovotacao.TipoVotacaoRespostaDTO;
 import com.br.cooperativismo.domain.model.TipoVotacaoPauta;
-import com.br.cooperativismo.exception.NegocioExeption;
+import com.br.cooperativismo.exception.NegocioException;
 import com.br.cooperativismo.util.ConstantsUtil;
 
 /**
@@ -35,7 +35,7 @@ public class TipoVotacaoPautaMapper {
 			dto.setDescricao(pedido.getDescricao());
 			return dto;
 		}	
-		throw new NegocioExeption(ConstantsUtil.SEM_DESCRICAO);
+		throw new NegocioException(ConstantsUtil.SEM_DESCRICAO);
 	}
 	
 	public static TipoVotacaoRespostaDTO mapperResposta(TipoVotacaoPautaDTO dto) {
