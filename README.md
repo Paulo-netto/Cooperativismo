@@ -28,6 +28,10 @@ $ mvn clean install
 
 Importe o projeto em uma IDE de suas preferência.
 
+1 - Vá no arquivo Cooperativismo/src/main/resources/application.properties e descomente o codigo 
+2 - Vá no arquivo /Cooperativismo/src/main/java/com/br/cooperativismo/CooperativismoApplication.java e execute
+
+>**importante:** Swagger link para testar API http://localhost:8080/swagger-ui/
 > **importante:** Para o desenvolvimento do projeto base utilizei o Eclipse.
 
 Agora build a aplicação na sua IDE.
