@@ -5,7 +5,6 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.br.cooperativismo.domain.dto.sessao.SessaoDTO;
 import com.br.cooperativismo.domain.model.Sessao;
@@ -16,7 +15,6 @@ import com.br.cooperativismo.service.mapper.SessaoMapper;
 import com.br.cooperativismo.util.ConstantsUtil;
 
 @Service
-@Transactional
 public class SessaoService {
 
 	@Autowired
@@ -24,15 +22,11 @@ public class SessaoService {
 	@Autowired
 	private TipoVotacaoPautaService tipoVotacaoPautaService;
 
-	public SessaoService(SessaoRepositoy sessaoRepositoy, TipoVotacaoPautaService tipoVotacaoPautaService) {
-		this.sessaoRepositoy = sessaoRepositoy;
-		this.tipoVotacaoPautaService = tipoVotacaoPautaService;
-	}
-
 	public SessaoDTO abrirSessao(SessaoDTO dto) {
+
 		Optional<TipoVotacaoPauta> tipoVotacaoPautaID = tipoVotacaoPautaService.findById(dto.getTipoVotacaoPautaId());
-		if (!tipoVotacaoPautaID.isPresent() || tipoVotacaoPautaID == null) {
-			throw new NegocioExeption(ConstantsUtil.ERRO_ABRIR_SESSAO_PAUTA);
+		if (!tipoVotacaoPautaID.isPresent()) {
+			throw new NegocioExeption(ConstantsUtil.PAUTA_NAO_EXISTE);
 		}
 		Sessao entidade = SessaoMapper.mapper(dto, tipoVotacaoPautaID.get(), dto.getVotoFinal());
 		Sessao salvar = sessaoRepositoy.save(entidade);
@@ -40,12 +34,14 @@ public class SessaoService {
 
 	}
 
-	public Boolean isSessionAbertar(TipoVotacaoPauta tipoVotacaoPauta) {
-		Optional<Sessao> optional = sessaoRepositoy.findByTipoVotacaoPauta(tipoVotacaoPauta);
+	public Boolean hasSessaoAberta(TipoVotacaoPauta tipoVotacaoPauta) {
+
+		Optional<Sessao> optional = sessaoRepositoy.findById(tipoVotacaoPauta.getId());
 		if (optional.isPresent()) {
 			return LocalDateTime.now().isBefore(optional.get().getTempoFinal());
 		}
-		throw new NegocioExeption(ConstantsUtil.ERRO_SESSAO);
+		throw new NegocioExeption(ConstantsUtil.SESSAO_FECHADA);
+
 	}
 
 }

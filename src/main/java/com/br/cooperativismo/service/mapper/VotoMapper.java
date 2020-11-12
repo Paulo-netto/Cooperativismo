@@ -20,7 +20,7 @@ import com.br.cooperativismo.util.ConstantsUtil;
 public class VotoMapper {
 
 	public static Voto mapper(TipoVotacaoPauta tipoVotacaoPauta, VotoDTO dto) {
-		return new Voto(tipoVotacaoPauta, dto.getDescricao(), dto.getVoto());
+		return new Voto(tipoVotacaoPauta, dto.getCpf(), dto.getVoto());
 	}
 
 	public static VotoDTO mapper(Voto voto) {
@@ -29,7 +29,7 @@ public class VotoMapper {
 
 	public static VotoDTO mapper(TipoVotacaoPauta tipoVotacaoPauta, Long votosSim, Long votosNao) {
 		VotoDTO dto = new VotoDTO();
-		dto.setDescricao(tipoVotacaoPauta.getDescricao());
+		dto.setCpf(tipoVotacaoPauta.getDescricao());
 		dto.setVotosSim(votosSim);
 		dto.setVotosNao(votosNao);
 		return dto;
@@ -42,7 +42,7 @@ public class VotoMapper {
 	}
 
 	public static VotoRespostaDTO mapper(VotoDTO dto, String tipoVotacaoPautaDescricao) {
-		return new VotoRespostaDTO(new TipoVotacaoRespostaDTO(dto.getDescricao()),
+		return new VotoRespostaDTO(new TipoVotacaoRespostaDTO(dto.getCpf()),
 				new SimNaoDTO(dto.getVotosSim(), dto.getVotosNao()), contagem(dto.getVotosSim(), dto.getVotosNao()));
 
 	}
@@ -73,7 +73,7 @@ public class VotoMapper {
 	public static VotoDTO mapper(Long tipoVotacaoPedidoId, VotoPedidoDTO pedido) {
 		VotoDTO dto = new VotoDTO();
 		dto.setTipoVotacaoPautaId(tipoVotacaoPedidoId);
-		dto.setDescricao(pedido.getDescricao());
+		dto.setCpf(pedido.getCpf());
 		dto.setVoto(pedido.getVoto());
 		return dto;
 	}

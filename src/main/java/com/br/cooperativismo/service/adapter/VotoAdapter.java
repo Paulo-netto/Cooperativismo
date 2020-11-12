@@ -16,15 +16,15 @@ public class VotoAdapter {
 	private VotoService votoService;
 
 	public void vota(Long tipoVotacaoPedidoId, VotoPedidoDTO pedido) {
-		VotoDTO mapper = VotoMapper.mapper(tipoVotacaoPedidoId, pedido);
-		VotoDTO service = votoService.vote(mapper);
-		VotoMapper.mapper(service);
+		VotoDTO votoPedido = VotoMapper.mapper(tipoVotacaoPedidoId, pedido);
+		VotoDTO votoResposta = votoService.vote(votoPedido);
+		VotoMapper.mapper(votoResposta);
 	}
 
 	public VotoRespostaDTO resultadoVotacao(Long tipoVotacaoPedidoId) {
-		VotoDTO mapper = VotoMapper.mapper(tipoVotacaoPedidoId);
-		VotoDTO service = votoService.votacao(mapper);
-		VotoRespostaDTO resultado = VotoMapper.mapper(service, service.getTipoVotacaoPautaDescricao());
+		VotoDTO votoPedido = VotoMapper.mapper(tipoVotacaoPedidoId);
+		VotoDTO votoResposta = votoService.resultadoVotacao(votoPedido);
+		VotoRespostaDTO resultado = VotoMapper.mapper(votoResposta, votoResposta.getTipoVotacaoPautaDescricao());
 		return resultado;
 	}
 

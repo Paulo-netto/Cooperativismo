@@ -5,7 +5,7 @@ public class VotoDTO {
 	private Long votosSim;
 	private Long votosNao;
 	private Long TipoVotacaoPautaId;
-	private String descricao;
+	private String cpf;
 	private Boolean voto;
 	private Boolean votoSucesso;
 	private String TipoVotacaoPautaDescricao;
@@ -13,12 +13,12 @@ public class VotoDTO {
 	public VotoDTO() {
 	}
 
-	public VotoDTO(Long votosSim, Long votosNao, Long tipoVotacaoPautaId, String descricao, Boolean voto,
-			Boolean votoSucesso, String tipoVotacaoPautaDescricao) {
+	public VotoDTO(Long votosSim, Long votosNao, Long tipoVotacaoPautaId, String cpf, Boolean voto, Boolean votoSucesso,
+			String tipoVotacaoPautaDescricao) {
 		this.votosSim = votosSim;
 		this.votosNao = votosNao;
 		this.TipoVotacaoPautaId = tipoVotacaoPautaId;
-		this.descricao = descricao;
+		this.cpf = cpf;
 		this.voto = voto;
 		this.votoSucesso = votoSucesso;
 		this.TipoVotacaoPautaDescricao = tipoVotacaoPautaDescricao;
@@ -27,8 +27,6 @@ public class VotoDTO {
 	public VotoDTO(Boolean votoSucesso) {
 		this.votoSucesso = votoSucesso;
 	}
-
-	
 
 	public Long getVotosSim() {
 		return votosSim;
@@ -54,12 +52,12 @@ public class VotoDTO {
 		TipoVotacaoPautaId = tipoVotacaoPautaId;
 	}
 
-	public String getDescricao() {
-		return descricao;
+	public String getCpf() {
+		return cpf;
 	}
 
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
 	}
 
 	public Boolean getVoto() {

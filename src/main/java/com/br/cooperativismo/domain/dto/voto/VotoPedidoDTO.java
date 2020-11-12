@@ -1,16 +1,19 @@
 package com.br.cooperativismo.domain.dto.voto;
 
+import javax.validation.constraints.NotEmpty;
+
 public class VotoPedidoDTO {
 
 	private Boolean voto;
-	private String descricao;
+	@NotEmpty(message = "O CPF não pode ser vazia")
+	private String cpf;
 
 	public VotoPedidoDTO() {
 	}
 
-	public VotoPedidoDTO(Boolean voto, String descricao) {
+	public VotoPedidoDTO(Boolean voto, String cpf) {
 		this.voto = voto;
-		this.descricao = descricao;
+		this.cpf = cpf;
 	}
 
 	public Boolean getVoto() {
@@ -21,12 +24,12 @@ public class VotoPedidoDTO {
 		this.voto = voto;
 	}
 
-	public String getDescricao() {
-		return descricao;
+	public String getCpf() {
+		return cpf;
 	}
 
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
 	}
 
 }

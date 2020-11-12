@@ -24,7 +24,7 @@ public class SwaggerConfig {
 	}
 
 	private ApiInfo apiInfo() {
-		return new ApiInfoBuilder().title("Técnica back-end ").description("API REST para cooperativismo")
+		return new ApiInfoBuilder().title("Corporativismo API ").description("API REST para cooperativismo")
 				.version("1.0.0").license("Apache License Version 2.0")
 				.licenseUrl("https://www.apache.org/licenses/LICENSE-2.0").contact(new Contact("Paulo Martins",
 						"https://www.linkedin.com/in/paulo-marttins/", "pmon.ims@gmail.com"))

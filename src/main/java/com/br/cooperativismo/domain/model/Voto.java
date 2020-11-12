@@ -25,8 +25,8 @@ public class Voto implements Serializable {
 	@JoinColumn(name = "tipo_votacao_pauta_id")
 	private TipoVotacaoPauta tipoVotacaoPauta;
 
-	@Column(name = "descricao")
-	private String descricao;
+	@Column(name = "cpf")
+	private String cpf;
 
 	@Column(name = "votoSimNao")
 	private Boolean simOuNao;
@@ -34,17 +34,17 @@ public class Voto implements Serializable {
 	public Voto() {
 	}
 
-	public Voto(TipoVotacaoPauta tipoVotacaoPauta, String descricao, Boolean simOuNao) {
+	public Voto(TipoVotacaoPauta tipoVotacaoPauta, String cpf, Boolean simOuNao) {
 		this.tipoVotacaoPauta = tipoVotacaoPauta;
-		this.descricao = descricao;
+		this.cpf = cpf;
 		this.simOuNao = simOuNao;
 	}
 
-	public Voto(Long id, TipoVotacaoPauta tipoVotacaoPauta, String descricao, Boolean simOuNao) {
+	public Voto(Long id, TipoVotacaoPauta tipoVotacaoPauta, String cpf, Boolean simOuNao) {
 		super();
 		this.id = id;
 		this.tipoVotacaoPauta = tipoVotacaoPauta;
-		this.descricao = descricao;
+		this.cpf = cpf;
 		this.simOuNao = simOuNao;
 	}
 
@@ -64,12 +64,12 @@ public class Voto implements Serializable {
 		this.tipoVotacaoPauta = tipoVotacaoPauta;
 	}
 
-	public String getDescricao() {
-		return descricao;
+	public String getCpf() {
+		return cpf;
 	}
 
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
 	}
 
 	public Boolean getSimOuNao() {
@@ -84,7 +84,7 @@ public class Voto implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((descricao == null) ? 0 : descricao.hashCode());
+		result = prime * result + ((cpf == null) ? 0 : cpf.hashCode());
 		result = prime * result + ((simOuNao == null) ? 0 : simOuNao.hashCode());
 		result = prime * result + ((tipoVotacaoPauta == null) ? 0 : tipoVotacaoPauta.hashCode());
 		return result;
@@ -99,10 +99,10 @@ public class Voto implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Voto other = (Voto) obj;
-		if (descricao == null) {
-			if (other.descricao != null)
+		if (cpf == null) {
+			if (other.cpf != null)
 				return false;
-		} else if (!descricao.equals(other.descricao))
+		} else if (!cpf.equals(other.cpf))
 			return false;
 		if (simOuNao == null) {
 			if (other.simOuNao != null)

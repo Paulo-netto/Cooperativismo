@@ -1,7 +1,10 @@
 package com.br.cooperativismo.domain.dto.tipovotacao;
 
+import javax.validation.constraints.NotEmpty;
+
 public class TipoVotacaoRespostaDTO {
 
+	@NotEmpty(message = "A descrição não pode ser vazia")
 	private String descricao;
 
 	public TipoVotacaoRespostaDTO() {

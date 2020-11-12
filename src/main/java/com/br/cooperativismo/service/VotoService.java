@@ -11,6 +11,8 @@ import com.br.cooperativismo.domain.model.TipoVotacaoPauta;
 import com.br.cooperativismo.domain.model.Voto;
 import com.br.cooperativismo.exception.NegocioExeption;
 import com.br.cooperativismo.repository.VotoRepository;
+import com.br.cooperativismo.resttemplate.StatusInforVoto;
+import com.br.cooperativismo.resttemplate.UserInfoApiRestCliente;
 import com.br.cooperativismo.service.mapper.VotoMapper;
 import com.br.cooperativismo.util.ConstantsUtil;
 
@@ -27,41 +29,44 @@ public class VotoService {
 	@Autowired
 	private SessaoService sessaoService;
 
+	@Autowired
+	private UserInfoApiRestCliente restCliente;
+
 	public VotoDTO vote(VotoDTO dto) {
+
 		Optional<TipoVotacaoPauta> optional = tipoVotacaoPautaService.findById(dto.getTipoVotacaoPautaId());
-		if (optional.isPresent()) {
-			if (sessaoService.isSessionAbertar(optional.get())) {
-				return votar(dto, optional);
-			}
-			throw new NegocioExeption(ConstantsUtil.SESSAO_FECHADA);
+		StatusInforVoto status = restCliente.consultarPermissaoParaVotar(dto.getCpf());
+		if (status.isApto()) {
+			validarSessaoDeVotacao(optional);
+			Voto novoVoto = VotoMapper.mapper(optional.get(), dto);
+			Voto votoSalvo = votoRepository.save(novoVoto);
+			return VotoMapper.mapper(votoSalvo);
 		}
-		throw new NegocioExeption(ConstantsUtil.NAO_POSSIVEL_VOTAR_NESTA_SESSAO);
+		throw new NegocioExeption(ConstantsUtil.NAO_APTO);
+
+	}
+
+	public VotoDTO resultadoVotacao(VotoDTO dto) {
+
+		Optional<TipoVotacaoPauta> optional = tipoVotacaoPautaService.findById(dto.getTipoVotacaoPautaId());
+		validarSessaoDeVotacao(optional);
+		return VotoMapper.mapper(optional.get(), votoRepository.countByTipoVotacaoPautaAndSimOuNaoTrue(optional.get()),
+				votoRepository.countByTipoVotacaoPautaAndSimOuNaoFalse(optional.get()));
 	}
 
 	/**
-	 * Metodo responsavel por salvar um voto na pauta
+	 * Metodo responsavel por validar a votação
 	 * 
-	 * @param dto
 	 * @param tipoVotacaoPauta
-	 * @return
 	 */
-	private VotoDTO votar(VotoDTO dto, Optional<TipoVotacaoPauta> tipoVotacaoPauta) {
-		Voto entidade = VotoMapper.mapper(tipoVotacaoPauta.get(), dto);
-		Voto salvar = votoRepository.save(entidade);
-		return VotoMapper.mapper(salvar);
-	}
-
-	public VotoDTO votacao(VotoDTO dto) {
-		Optional<TipoVotacaoPauta> optional = tipoVotacaoPautaService.findById(dto.getTipoVotacaoPautaId());
-		if (optional.isPresent() && sessaoService.isSessionAbertar(optional.get())) {
-			return VotoMapper.mapper(optional.get(),
-					votoRepository.countByTipoVotacaoPautaAndSimOuNaoTrue(optional.get()),
-					votoRepository.countByTipoVotacaoPautaAndSimOuNaoFalse(optional.get()));
+	private void validarSessaoDeVotacao(Optional<TipoVotacaoPauta> tipoVotacaoPauta) {
+		if (!tipoVotacaoPauta.isPresent()) {
+			throw new NegocioExeption(ConstantsUtil.PAUTA_NAO_EXISTE);
 		}
-		throw new NegocioExeption(ConstantsUtil.SESSAO_FECHADA_ERRO);
+		if (!sessaoService.hasSessaoAberta(tipoVotacaoPauta.get())) {
+			throw new NegocioExeption(ConstantsUtil.SESSAO_FECHADA);
+		}
 
 	}
-
-
 
 }

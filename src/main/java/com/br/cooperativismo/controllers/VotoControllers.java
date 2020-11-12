@@ -5,7 +5,9 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,13 +17,19 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.br.cooperativismo.domain.dto.voto.VotoPedidoDTO;
 import com.br.cooperativismo.domain.model.Voto;
+import com.br.cooperativismo.exception.NegocioExeption;
 import com.br.cooperativismo.service.adapter.VotoAdapter;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
 @RestController
-@RequestMapping("votos")
+@Api(tags = { "Endpoints de Votacao" })
+@RequestMapping("votacao")
 public class VotoControllers {
 
 	private Logger log = LoggerFactory.getLogger(VotoControllers.class);
@@ -37,11 +45,19 @@ public class VotoControllers {
 		return ResponseEntity.ok().build();
 	}
 
-	@GetMapping("/{tipoVotacaoPautaId}")
+	@GetMapping("/{codigoPauta}")
 	@ApiOperation(value = "Retornar o resultado da votação", response = Voto.class)
-	public ResponseEntity<?> getResultadoVotacao(@PathVariable Long tipoVotacaoPautaId) {
-		log.debug("Requisição REST para retornar o resultado da votacao : {}", tipoVotacaoPautaId);
-		return ResponseEntity.ok(VotoAdapter.resultadoVotacao(tipoVotacaoPautaId));
+	public ResponseEntity<?> getResultadoVotacao(@PathVariable Long codigoPauta) {
+		log.debug("Requisição REST para retornar o resultado da votacao : {}", codigoPauta);
+		return ResponseEntity.ok(VotoAdapter.resultadoVotacao(codigoPauta));
+	}
+
+	@ExceptionHandler(NegocioExeption.class)
+	public ResponseEntity<JsonNode> handleExceptionServeErro(NegocioExeption e) {
+		HttpStatus badRequest = HttpStatus.INTERNAL_SERVER_ERROR;
+		ObjectNode jsonNode = new ObjectMapper().createObjectNode();
+		jsonNode.put("message", e.getMessage());
+		return ResponseEntity.status(badRequest).body(jsonNode);
 	}
 
 }

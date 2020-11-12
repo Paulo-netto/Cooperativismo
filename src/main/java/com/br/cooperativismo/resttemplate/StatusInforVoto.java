@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class StatusInforVoto {
 
-	private static final String ABLE_TO_VOTE = "APTO_A_VOTAR";
+	private static final String ABLE_TO_VOTE = "ABLE_TO_VOTE";
 
 	private String status;
 

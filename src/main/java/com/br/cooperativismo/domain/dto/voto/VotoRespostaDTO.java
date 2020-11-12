@@ -1,48 +1,51 @@
 package com.br.cooperativismo.domain.dto.voto;
 
+import javax.validation.constraints.NotEmpty;
+
 import com.br.cooperativismo.domain.dto.tipovotacao.TipoVotacaoRespostaDTO;
 
 public class VotoRespostaDTO {
 
-	private String descricao;
-	private TipoVotacaoRespostaDTO tipoVotacaoRespostaDTO;
-	private SimNaoDTO simNaoDTO;
+	@NotEmpty(message = "O CPF não pode ser vazia")
+	private String cpf;
+	private TipoVotacaoRespostaDTO pauta;
+	private SimNaoDTO resumoVotacao;
 
 	public VotoRespostaDTO() {
 	}
 
-	public VotoRespostaDTO(String descricao) {
-		this.descricao = descricao;
+	public VotoRespostaDTO(String cpf) {
+		this.cpf = cpf;
 	}
 
-	public VotoRespostaDTO(TipoVotacaoRespostaDTO tipoVotacaoRespostaDTO, SimNaoDTO simNaoDTO, String descricao) {
-		this.descricao = descricao;
-		this.tipoVotacaoRespostaDTO = tipoVotacaoRespostaDTO;
-		this.simNaoDTO = simNaoDTO;
+	public VotoRespostaDTO(TipoVotacaoRespostaDTO tipoVotacaoRespostaDTO, SimNaoDTO simNaoDTO, String cpf) {
+		this.cpf = cpf;
+		this.pauta = tipoVotacaoRespostaDTO;
+		this.resumoVotacao = simNaoDTO;
 	}
 
-	public String getDescricao() {
-		return descricao;
+	public String getCpf() {
+		return cpf;
 	}
 
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
 	}
 
-	public TipoVotacaoRespostaDTO getTipoVotacaoAptoDTO() {
-		return tipoVotacaoRespostaDTO;
+	public TipoVotacaoRespostaDTO getPauta() {
+		return pauta;
 	}
 
-	public void setTipoVotacaoAptoDTO(TipoVotacaoRespostaDTO tipoVotacaoRespostaDTO) {
-		this.tipoVotacaoRespostaDTO = tipoVotacaoRespostaDTO;
+	public void setPauta(TipoVotacaoRespostaDTO pauta) {
+		this.pauta = pauta;
 	}
 
-	public SimNaoDTO getSimNaoDTO() {
-		return simNaoDTO;
+	public SimNaoDTO getResumoVotacao() {
+		return resumoVotacao;
 	}
 
-	public void setSimNaoDTO(SimNaoDTO simNaoDTO) {
-		this.simNaoDTO = simNaoDTO;
+	public void setResumoVotacao(SimNaoDTO resumoVotacao) {
+		this.resumoVotacao = resumoVotacao;
 	}
 
 }
