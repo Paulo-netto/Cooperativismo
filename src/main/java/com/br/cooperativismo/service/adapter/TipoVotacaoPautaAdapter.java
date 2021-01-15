@@ -21,7 +21,7 @@ public class TipoVotacaoPautaAdapter {
 	public void salvar(TipoVotacaoPedidoDTO pedido) {
 		TipoVotacaoPautaDTO dto = TipoVotacaoPautaMapper.mapper(pedido);
 		TipoVotacaoPautaMapper.mapperResposta(tipoVotacaoPautaService.salvarTipoVotacaoPauta(dto));
-
+		
 	}
 	
 	

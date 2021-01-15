@@ -49,10 +49,10 @@ public class SessaoControllers {
 
 	@ExceptionHandler(NotFoundException.class)
 	public ResponseEntity<JsonNode> handleExceptionServeErro(NotFoundException e) {
-		HttpStatus badRequest = HttpStatus.INTERNAL_SERVER_ERROR;
+		HttpStatus erro = HttpStatus.INTERNAL_SERVER_ERROR;
 		ObjectNode jsonNode = new ObjectMapper().createObjectNode();
 		jsonNode.put("Mensagem", e.getMessage());
-		return ResponseEntity.status(badRequest).body(jsonNode);
+		return ResponseEntity.status(erro).body(jsonNode);
 	}
 
 }
