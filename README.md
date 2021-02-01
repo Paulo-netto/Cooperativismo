@@ -45,7 +45,7 @@ $  clean install
 
 ## Tecnologias utilizadas 
 
-1 - Spring Boot: Para o desenvolvimento do presente projeto foi utilizado como base o SpringBoot, escolhi essa tecnologia, pois, essa ela tem vários benefícios e um desses é otimizar o tempo e aumentar a produtividade, já que ele facilitar o processo de configuração e publicação da nossa aplicação. Ou seja, não precisei perde tempo desenvolvendo uma aplicação do zero, o springboot já disponibilizou maioria dos recursos necessários.
+1 - Spring Boot: Para o desenvolvimento do presente projeto foi utilizado como base o SpringBoot, escolhi essa tecnologia, pois, ela tem vários benefícios e um desses é otimizar o tempo e aumentar a produtividade, já que ele facilitar o processo de configuração e publicação da nossa aplicação. Ou seja, não precisei perde tempo desenvolvendo uma aplicação do zero, o springboot já disponibilizou maioria dos recursos necessários.
 
 2 - Banco de dados: Como escolha para persistir os dados e que eles não sejam perdidos, escolhi o modelo relacional SQL e o banco postgresql, pois, são de fácil configuração.
 
